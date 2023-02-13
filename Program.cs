@@ -12,11 +12,23 @@ var end = new Point(26, 27);
 // Coordinated of both start and end points
 List<Point> path = new List<Point> {start, end};
 
-string[,] map = generator.Generate();
+var map = generator.Generate();
 new MapPrinter().Print(map, path);
 
-List<Point> GetShortestPath(string[,] map, Point start, Point end)
+void GetShortestPath(string[,] map, Point start, Point end)
 {
-    return null;
+
+
+    for (int i = start.Column; i < map.GetLength(0); i++)
+    {
+        Point currentPoint = new Point(i, start.Row);
+        if (map[currentPoint.Column, currentPoint.Row] == ".")
+        {
+            map[currentPoint.Column, currentPoint.Row] = "-";
+        }
+    }
 }
 
+
+GetShortestPath(map, start, end);
+new MapPrinter().Print(map, path);
