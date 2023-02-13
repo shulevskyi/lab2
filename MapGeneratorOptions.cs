@@ -4,9 +4,9 @@ namespace ConsoleApp3
 {
     public class MapGeneratorOptions
     {
-        public int Width { get; set; }
+        public int Width { get; set; } = 1;
 
-        public int Height { get; set; }
+        public int Height { get; set; } = 1;
 
         public MapType Type { get; set; } = MapType.Maze; 
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/ConsoleApp3/ConsoleApp3.csproj": {}
+    "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/lab2/ConsoleApp3.csproj": {}
   },
   "projects": {
-    "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/ConsoleApp3/ConsoleApp3.csproj": {
+    "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/lab2/ConsoleApp3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/ConsoleApp3/ConsoleApp3.csproj",
+        "projectUniqueName": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/lab2/ConsoleApp3.csproj",
         "projectName": "ConsoleApp3",
-        "projectPath": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/ConsoleApp3/ConsoleApp3.csproj",
+        "projectPath": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/lab2/ConsoleApp3.csproj",
         "packagesPath": "/Users/danielshulevskiy/.nuget/packages/",
-        "outputPath": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/ConsoleApp3/obj/",
+        "outputPath": "/Users/danielshulevskiy/RiderProjects/ConsoleApp3/lab2/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/danielshulevskiy/.nuget/NuGet/NuGet.Config"
