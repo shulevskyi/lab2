@@ -64,9 +64,12 @@ void GetShortestPath(string[,] map, Node start, Node target)
             return;
         }
 
-        foreach (Node neighbor in GetNeighbors(currentNode))
+        foreach (Node neighbor in Node.GetNeighbors(curerentNode, map))
         {
-            // hmm
+            if (!neighbor.IsTraversable(map) || closedSet.Contains(neighbor))
+            {
+                continue;
+            }
         }
 
         

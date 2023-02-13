@@ -6,7 +6,7 @@ namespace ConsoleApp3
 
     public class MapGenerator
     {
-        private const string Wall = "█";
+        public const string Wall = "█";
 
         private const string Space = ".";
 
