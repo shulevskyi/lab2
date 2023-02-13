@@ -17,55 +17,62 @@ var map = generator.Generate();
 new MapPrinter().Print(map, path);
 
 
-var startNode = new Node(43, 12, );
 
-List<Node> openSet = new List<Node> {};
-HashSet<Node> closedSet = new HashSet<Node> {};
+
+
+
+
+
+
+
+
+
+var startNode = new Node(43, 12);
+var endNode = new Node(26, 27);
+
+
+List<Node> openSet = new List<Node> ();
+HashSet<Node> closedSet = new HashSet<Node> ();
 openSet.Add(startNode);
 
 
-
-
-void GetShortestPath(string[,] map, Point start, Point end)
+void GetShortestPath(string[,] map, Node start, Node target)
 {
 
     while (openSet.Count > 0)
+
     {
-        // current = point in openSet with the lowest f_cost
-        
+        Node curerentNode;
+        curerentNode = openSet[0];
+
+        for (int i = 1; i < openSet.Count; i++)
+        {
+            if (openSet[i].FCost < curerentNode.FCost ||
+                openSet[i].FCost == curerentNode.FCost && openSet[i].HCost < curerentNode.HCost)
+            {
+                curerentNode = openSet[i];
+                Console.Write(curerentNode.FCost);
+            }  
+        }
+
+        openSet.Remove(curerentNode);
+        closedSet.Add(curerentNode);
+
+        if (curerentNode == target) // path has been found
+        {
+            Console.Write("Path has been found");
+            return;
+        }
+
+        foreach (Node neighbor in GetNeighbors(currentNode))
+        {
+            // hmm
+        }
+
         
     }
 
 }
 
 
-// Distance for current cell to the target cell
-static double DistanceEnd(Point current_cell, Point end_cell)
-{
-    var xDiff = end_cell.Column - current_cell.Column;
-    var yDiff = end_cell.Row - current_cell.Row;
-    var distance = Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
-    return distance;
-}
-
-
-// Distance from the current cell to the start point
-static double DistanceOrigin(Point current_cell, Point start_cell)
-{
-    var xDiff = current_cell.Column - start_cell.Column;
-    var yDiff = current_cell.Row - start_cell.Row;
-    var distance = Math.Sqrt(Math.Pow(xDiff, 2) + Math.Pow(yDiff, 2));
-    return distance;
-}
-
-//Console.Write(DistanceEnd(start, start));
-
-
-
-//GetShortestPath(map, start, end);
-//new MapPrinter().Print(map, path);
-
-public Node(int value)
-{
-    Value = value;
-}
+GetShortestPath(map, startNode, endNode);
