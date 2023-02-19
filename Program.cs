@@ -1,5 +1,5 @@
 ﻿using ConsoleApp3;
-using Microsoft.VisualBasic;
+
 
 var generator = new MapGenerator(new MapGeneratorOptions()
 {
@@ -7,75 +7,154 @@ var generator = new MapGenerator(new MapGeneratorOptions()
     Width = 90,
 });
 
-var start = new Point(43, 12);
-var end = new Point(26, 27);
-
-// Coordinated of both start and end points
-List<Point> path = new List<Point> {start, end};
-
 var map = generator.Generate();
-new MapPrinter().Print(map, path);
+var start = new Point(43, 12);
+var target = new Point(26, 27);
 
 
+List<Point> path = new List<Point> {start, target};
+
+var open = new List<Point>();
+var closed = new List<Point>();
 
 
+open.Add(start);
 
-
-
-
-
-
-
-
-var startNode = new Node(43, 12);
-var endNode = new Node(26, 27);
-
-
-List<Node> openSet = new List<Node> ();
-HashSet<Node> closedSet = new HashSet<Node> ();
-openSet.Add(startNode);
-
-
-void GetShortestPath(string[,] map, Node start, Node target)
+while (open.Count > 0)
 {
-
-    while (openSet.Count > 0)
-
+    
+    // Sort the open list by f-cost and select the first (i.e., lowest f-cost) point
+    var current = open.MinBy(p => FCost(p, start, target));
+    Console.WriteLine(FCost(current, start, target));
+    
+    
+    if (current.Equals(target))
     {
-        Node curerentNode;
-        curerentNode = openSet[0];
-
-        for (int i = 1; i < openSet.Count; i++)
-        {
-            if (openSet[i].FCost < curerentNode.FCost ||
-                openSet[i].FCost == curerentNode.FCost && openSet[i].HCost < curerentNode.HCost)
-            {
-                curerentNode = openSet[i];
-                Console.Write(curerentNode.FCost);
-            }  
-        }
-
-        openSet.Remove(curerentNode);
-        closedSet.Add(curerentNode);
-
-        if (curerentNode == target) // path has been found
-        {
-            Console.Write("Path has been found");
-            return;
-        }
-
-        foreach (Node neighbor in Node.GetNeighbors(curerentNode, map))
-        {
-            if (!neighbor.IsTraversable(map) || closedSet.Contains(neighbor))
-            {
-                continue;
-            }
-        }
-
-        
+        Console.WriteLine("Path found!");
+        break;
     }
+    
+    // Move the current point from the open list to the closed list
+    open.Remove(current);
+    closed.Add(current);
+    
+    
 
+    
+    
+
+    var neighbours = GetNeighbours(current.Column, current.Row, map);
+    Console.WriteLine(neighbours.Count);
+    foreach (var neighbour in neighbours)
+    {
+        
+
+        if (!closed.Contains(neighbour))
+        {
+            open.Add(neighbour);
+            map[neighbour.Column, neighbour.Row] = ".";
+        }
+
+
+    }
+    
+    new MapPrinter().Print(map, path);
 }
 
 
-GetShortestPath(map, startNode, endNode);
+
+
+
+List<Point> GetNeighbours(int column, int row, string[,] map)
+{
+    var neighbours = new List<Point>();
+        
+    bool IsTraversable(Point point) => CheckPosition(point, map) == " ";
+        
+        
+    var topNeighbour = new Point(column, row - 1);
+    if (IsTraversable(topNeighbour))
+    {
+        neighbours.Add(topNeighbour);
+    }
+        
+    var bottomNeighbour = new Point(column, row + 1);
+    if (IsTraversable(bottomNeighbour))
+    {
+        neighbours.Add(bottomNeighbour);
+    }
+
+    var leftNeighbour = new Point(column - 1, row);
+    if (IsTraversable(leftNeighbour))
+    {
+        neighbours.Add(leftNeighbour);
+    }
+
+    var rightNeighbour = new Point(column + 1, row);
+    if (IsTraversable(rightNeighbour))
+    {
+        neighbours.Add(rightNeighbour);
+    }
+        
+    return neighbours;
+}
+
+
+string CheckPosition(Point point, string[,] map)
+{
+    var leftBorder = point.Column < 0;
+    var rightBorder = point.Column >= map.GetLength(0);
+    var topBorder = point.Row < 0;
+    var bottomBorder = point.Row >= map.GetLength(1);
+        
+    // TODO: catch exception
+    if (leftBorder || rightBorder || topBorder || bottomBorder) return "";
+
+    return map[point.Column, point.Row];
+}
+
+// Check if cell is walkable
+bool IsTraversable(Point point, string[,] map)
+{
+    if (map[point.Row, point.Column] != MapGenerator.Wall)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+
+
+double HCost(Point current, Point target)
+{
+    // The distance from the current point to the target one (B)
+    int dx = target.Column - current.Column;
+    int dy = target.Row - current.Row;
+    double distance = Math.Sqrt(dx*dx + dy*dy);
+   
+    return distance;
+
+}
+
+double GCost(Point start, Point current)
+{
+    
+    // The distance from the starting point (A) to the current one
+    int dx = current.Column - start.Column;
+    int dy = current.Row - start.Row;
+    double distance = Math.Sqrt(dx*dx + dy*dy);
+
+    return distance;
+}
+
+double FCost(Point current, Point start, Point target)
+{
+    double gCost = GCost(start, current);
+    double hCost = HCost(current, target);
+    double fCost = gCost + hCost;
+
+    return fCost;
+}

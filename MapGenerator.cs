@@ -8,7 +8,7 @@ namespace ConsoleApp3
     {
         public const string Wall = "█";
 
-        private const string Space = ".";
+        private const string Space = " ";
 
         private readonly MapGeneratorOptions options;
 
@@ -74,7 +74,7 @@ namespace ConsoleApp3
 
             void RemoveWallBetween(Point a, Point b)
             {
-                maze[(a.Column + b.Column) / 2, (a.Row + b.Row) / 2] = ".";
+                maze[(a.Column + b.Column) / 2, (a.Row + b.Row) / 2] = " ";
             }
 
             void Shuffle(Random rng, Point[] array)
@@ -96,7 +96,7 @@ namespace ConsoleApp3
                 {
                     if (random.NextDouble() < chance && maze[x, y] == Wall)
                     {
-                        maze[x, y] = ".";
+                        maze[x, y] = " ";
                     }
                 }
             }
@@ -119,7 +119,7 @@ namespace ConsoleApp3
                 {
                     for (var x = 0; x < maze.GetLength(0); x++)
                     {
-                        if (maze[x, y] == ".")
+                        if (maze[x, y] == " ")
                         {
                             return new Point(x, y);
                         }

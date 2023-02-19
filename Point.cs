@@ -7,10 +7,8 @@ namespace ConsoleApp3
 
         public Point(int column, int row)
         {
-            
             Column = column;
             Row = row;
-            
         }
     }
 }

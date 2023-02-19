@@ -12,7 +12,7 @@ namespace ConsoleApp3
 
         public float Noise { get; set; }
 
-        public int Seed { get; set; } = -1;
+        public int Seed { get; set; } = 100;
         
         public bool AddTraffic { get; set; }
         
